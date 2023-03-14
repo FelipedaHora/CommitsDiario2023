@@ -24,13 +24,27 @@
             const repositorio = document.querySelector('#repositorioInput').value;
             const dataInicial = document.querySelector('#dataInicialInput').value;
             const dataFinal = document.querySelector('#dataFinalInput').value;
-            console.log(respositorio + " " + dataInicial + " " + dataFinal);
             buscarCommits(repositorio, dataInicial, dataFinal);
             
         });
 
-        function buscarCommits(repositorio, dataInicial, DataFinal){
-            const url = `https://api.github.com/repos/${repositorio}/PW-2023/commits`;
+        function buscarCommits(repositorio, dataInicial, dataFinal){
+            const url = `https://api.github.com/repos/${repositorio}/commits?since=${dataInicial}&until=${dataFinal}`;
+            fetch(url).then(response=>response.json()).then(commmits=>{contarCommmits(commmits)})
+        }
+
+        function contarCommmits(commmits){
+
+            const commitsPorDia = {};
+            commmits.forEach(element => {
+                const dataCommit = element.commit.author.date.substr(0,10);
+                if(commitsPorDia[dataCommit]){
+                    commitsPorDia[dataCommit].quantidade++;
+                }else{
+                    commitsPorDia[dataCommit]={quantidade:1,data:dataCommit};
+                }
+            });
+            console.log(commitsPorDia);
         }
 
     </script>
