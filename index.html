@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificação de Commmits</title>
+</head>
+<body>
+    <form>
+        <label>Repositório</label>
+        <input type="text" id="repositorioInput"/><br/><br/>
+        <label>Data Inicial</label>
+        <input type="date" id="dataInicialInput"><br /><br />
+        <label>Data Final</label>
+        <input type="date" id="dataFinalInput"><br /><br />
+        <input type="submit" value="Pesquisar">
+    </form>
+
+    <script>
+        const form = document.querySelector("form");
+        form.addEventListener('submit', function(event){
+            event.preventDefault();
+            const repositorio = document.querySelector('#repositorioInput').value;
+            const dataInicial = document.querySelector('#dataInicialInput').value;
+            const dataFinal = document.querySelector('#dataFinalInput').value;
+            console.log(respositorio + " " + dataInicial + " " + dataFinal);
+            
+        });
+
+        function buscarCommits(repositorio, dataInicial, DataFinal){
+
+        }
+
+    </script>
+</body>
+</html>
