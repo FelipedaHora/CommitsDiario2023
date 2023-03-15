@@ -16,6 +16,7 @@
         <input type="date" id="dataFinalInput"><br /><br />
         <input type="submit" value="Pesquisar">
     </form>
+    <div id="dados"></div>
 
     <script>
         const form = document.querySelector("form");
@@ -30,7 +31,7 @@
 
         function buscarCommits(repositorio, dataInicial, dataFinal){
             const url = `https://api.github.com/repos/${repositorio}/commits?since=${dataInicial}&until=${dataFinal}`;
-            fetch(url).then(response=>response.json()).then(commmits=>{contarCommmits(commmits)})
+            fetch(url).then(response=>response.json()).then(commmits=>contarCommmits(commmits))
         }
 
         function contarCommmits(commmits){
@@ -45,6 +46,21 @@
                 }
             });
             console.log(commitsPorDia);
+
+            const commitsPorDiaArray = Object.keys(commitsPorDia).map(dataCommit=>{
+                return {data:dataCommit, quantidade:commitsPorDia[dataCommit].quantidade};
+            })
+            //console.log(commitsPorDiaArray);
+            mostrarTela(commitsPorDiaArray);
+        }
+
+        function mostrarTela(commits){
+            const dados = document.querySelector("#dados");
+            commits.forEach(element => {
+                const h1 = document.createElement("h1");
+                h1.innerHTML = element.data+" - "+element.quantidade;
+                dados.appendChild(h1);
+            });
         }
 
     </script>
