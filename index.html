@@ -1,68 +1,80 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificação de Commmits</title>
+    <title class="title">Verificação de Commmits</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <form>
-        <label>Repositório</label>
-        <input type="text" id="repositorioInput"/><br/><br/>
-        <label>Data Inicial</label>
-        <input type="date" id="dataInicialInput"><br /><br />
-        <label>Data Final</label>
-        <input type="date" id="dataFinalInput"><br /><br />
-        <input type="submit" value="Pesquisar">
-    </form>
+    <div class="formulario">
+        <div class="container">
+            <form>
+                <label class="label"><b>Repositório</b></label>
+                <input class="inputFullSize" type="text" id="repositorioInput" /><br /><br />
+
+                <label class="label" ><b>Data Inicial</b></label>
+                <input class="inputFullSize" type="date" id="dataInicialInput"><br /><br />
+
+                <label class="label" ><b>Data Final</b></label>
+                <input class="inputFullSize" type="date" id="dataFinalInput"><br /><br />
+
+                <input class="btn-submit" type="submit" value="Pesquisar">
+            </form>
+        </div>
+    </div>
+
     <div id="dados"></div>
 
     <script>
         const form = document.querySelector("form");
-        form.addEventListener('submit', function(event){
+        form.addEventListener('submit', function (event) {
             event.preventDefault();
             const repositorio = document.querySelector('#repositorioInput').value;
             const dataInicial = document.querySelector('#dataInicialInput').value;
             const dataFinal = document.querySelector('#dataFinalInput').value;
             buscarCommits(repositorio, dataInicial, dataFinal);
-            
+
         });
 
-        function buscarCommits(repositorio, dataInicial, dataFinal){
+        function buscarCommits(repositorio, dataInicial, dataFinal) {
             const url = `https://api.github.com/repos/${repositorio}/commits?since=${dataInicial}&until=${dataFinal}`;
-            fetch(url).then(response=>response.json()).then(commmits=>contarCommmits(commmits))
+            fetch(url).then(response => response.json()).then(commmits => contarCommmits(commmits))
         }
 
-        function contarCommmits(commmits){
+        function contarCommmits(commmits) {
 
             const commitsPorDia = {};
             commmits.forEach(element => {
-                const dataCommit = element.commit.author.date.substr(0,10);
-                if(commitsPorDia[dataCommit]){
+                const dataCommit = element.commit.author.date.substr(0, 10);
+                if (commitsPorDia[dataCommit]) {
                     commitsPorDia[dataCommit].quantidade++;
-                }else{
-                    commitsPorDia[dataCommit]={quantidade:1,data:dataCommit};
+                } else {
+                    commitsPorDia[dataCommit] = { quantidade: 1, data: dataCommit };
                 }
             });
             console.log(commitsPorDia);
 
-            const commitsPorDiaArray = Object.keys(commitsPorDia).map(dataCommit=>{
-                return {data:dataCommit, quantidade:commitsPorDia[dataCommit].quantidade};
+            const commitsPorDiaArray = Object.keys(commitsPorDia).map(dataCommit => {
+                return { data: dataCommit, quantidade: commitsPorDia[dataCommit].quantidade };
             })
             //console.log(commitsPorDiaArray);
             mostrarTela(commitsPorDiaArray);
         }
 
-        function mostrarTela(commits){
+        function mostrarTela(commits) {
             const dados = document.querySelector("#dados");
             commits.forEach(element => {
                 const h1 = document.createElement("h1");
-                h1.innerHTML = element.data+" - "+element.quantidade;
+                h1.innerHTML = element.data + " - " + element.quantidade;
                 dados.appendChild(h1);
             });
         }
 
     </script>
 </body>
+
 </html>
