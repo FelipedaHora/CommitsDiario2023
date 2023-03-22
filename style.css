@@ -90,3 +90,9 @@ tr:hover {
         width: auto;
     }
 }
+
+@media screen and (max-width: 780px) { 
+    .formulario{
+        width: 100%;
+    }
+}
