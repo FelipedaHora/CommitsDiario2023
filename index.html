@@ -46,7 +46,8 @@
             });
 
             function buscarCommits(repositorio, dataInicial, dataFinal) {
-                const url = `https://api.github.com/repos/${repositorio}/commits?since=${dataInicial}&until=${dataFinal}`;
+                var repositorioTratado = tratarCamposUrl(repositorio);
+                const url = `https://api.github.com/repos/${repositorioTratado}/commits?since=${dataInicial}&until=${dataFinal}`;
                 fetch(url).then(response => response.json()).then(commmits => contarCommmits(commmits))
             }
 
@@ -124,6 +125,13 @@
 
                     tabela.appendChild(linha);
                 });
+            }
+
+            function tratarCamposUrl(url){
+                let sizeUrl = url.split('/');
+                let usuario = sizeUrl[3];
+                let repositorio = sizeUrl[4]
+                return usuario + "/" + repositorio
             }
 
         </script>
