@@ -107,7 +107,7 @@
                     const linha = document.createElement("tr");
 
                     const celulaData = document.createElement("td");
-                    celulaData.textContent = commit.data;
+                    celulaData.textContent = formatDate(commit.data);
                     linha.appendChild(celulaData);
 
                     const celulaQuantidade = document.createElement("td");
@@ -126,11 +126,19 @@
                 });
             }
 
-            function tratarCamposUrl(url){
+            function tratarCamposUrl(url) {
                 let sizeUrl = url.split('/');
                 let usuario = sizeUrl[3];
                 let repositorio = sizeUrl[4]
                 return usuario + "/" + repositorio
+            }
+
+            function formatDate(input) {
+                var datePart = input.match(/\d+/g),
+                    year = datePart[0].substring(2), // get only two digits
+                    month = datePart[1], day = datePart[2];
+
+                return day + '/' + month + '/' + year;
             }
 
         </script>
