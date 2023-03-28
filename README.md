@@ -1,2 +1,3 @@
 # CommitsDiario2023
-Repositorio destinado a commits diarios da materia Programação Web no Instituto Federal do Paraná
+Repositorio back-end destinado a commits diarios da materia Programação Web no Instituto Federal do Paraná
+Feito em Java com Sprin
