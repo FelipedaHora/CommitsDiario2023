@@ -19,6 +19,7 @@ public class AlunoService {
         return alunoRepository.findAll();
     }
 
+    
     public void excluir(Long id){
         Aluno aluno = alunoRepository.findById(id).get();
         alunoRepository.delete(aluno);
